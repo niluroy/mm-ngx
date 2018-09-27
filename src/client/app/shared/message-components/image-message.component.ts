@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Message } from '../database/message';
 import { ChatService } from '../../chat/chat.service';
-import { DomSanitizer ,SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 /**
  * ImageMessageComponent to display image
@@ -9,25 +9,16 @@ import { DomSanitizer ,SafeResourceUrl } from '@angular/platform-browser';
  * @class ImageMessageComponent
  */
 @Component({
+    moduleId: module.id,
     selector: 'mm-image-message',
-    template: `
-            <div *ngIf="url; else loading">
-                <img [src]="url" alt="Image" class="rounded img-fluid">
-            </div>
-            <ng-template #loading>
-                Loading...
-            </ng-template>
-    `,
-    styles: [`
-    img {
-        max-width: 70%    !important;
-        height: auto   !important;
-    }
-    `]
+    templateUrl: 'image-message.component.html',
+    styleUrls: ['image-message.component.css']
 })
 
 export class ImageMessageComponent implements OnInit {
+
     @Input() message: Message;
+    @ViewChild('modal') modal: ElementRef;
     url: SafeResourceUrl;
 
     constructor(private chatService: ChatService, private sanitizer: DomSanitizer, private ref: ChangeDetectorRef) { }
@@ -43,8 +34,16 @@ export class ImageMessageComponent implements OnInit {
             .subscribe((res) => {
                 res.onloadend = () => {
                     this.url = this.sanitizer.bypassSecurityTrustUrl(res.result);
+                    this.ref.markForCheck();
                 };
             });
-            this.ref.detectChanges();
+    }
+
+    openModal() {
+        this.modal.nativeElement.style.display = 'block';
+      }
+
+      closeModal() {
+        this.modal.nativeElement.style.display = 'none';
     }
 }

@@ -30,6 +30,7 @@ export class ProjectConfig extends SeedConfig {
     this.APP_ASSETS = [
       // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
+      { src: `node_modules/angular-vertical-timeline/dist/vertical-timeline.css`, inject: true, vendor: false }
     ];
 
     this.ROLLUP_INCLUDE_DIR = [
@@ -81,14 +82,30 @@ export class ProjectConfig extends SeedConfig {
       name: '@ng-bootstrap/ng-bootstrap',
       path: 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js'
     });
+
     this.addPackageBundles({
       name: 'moment',
       path: 'node_modules/moment/moment.js'
     });
 
     this.addPackageBundles({
-      name: 'ngx-cookie',
-      path: 'node_modules/ngx-cookie/bundles/ngx-cookie.umd.js'
+      name: 'Chart',
+      path: 'node_modules/chart.js/dist/Chart.bundle.js'
+    });
+
+    this.addPackageBundles({
+      name: 'ngx-drag-scroll',
+      path: 'node_modules/ngx-drag-scroll/index.js'
+    });
+
+    this.addPackageBundles({
+      name: 'angular-vertical-timeline',
+      path: 'node_modules/angular-vertical-timeline/dist/index.umd.js'
+    });
+
+    this.addPackageBundles({
+      name: 'ng-multiselect-dropdown',
+      path: 'node_modules/ng-multiselect-dropdown/bundles/ng-multiselect-dropdown.umd.js'
     });
 
     // Add packages (e.g. ng2-translate)
